@@ -35,14 +35,17 @@ int32_t main(){
         freopen("error.txt", "w", stderr);
     #endif
 
+    // Taking input from console
     int n, k = 0;
     cin >> n;
     vector<vector<int>> arr(n, vector<int>(3, 0));
     vector<int> ans(n);
     rep_u(i, 0, n) cin >> arr[i][0] >> arr[i][1];
     rep_u(i, 0, n) arr[i][2] = i;
+    // Sorting the array according to the arrival time
     sort(all(arr));
 
+    // Using priority queue to store the departure time and room number
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> data;
     rep_u(i, 0, n){
         if(data.empty()){
@@ -50,12 +53,14 @@ int32_t main(){
             ans[arr[i][2]] = k;
         }
         else{
+            // If there is an empty room available
             if(data.top().first < arr[i][0]){
                 pair<int, int> temp = data.top();
                 data.pop();
                 data.push(mp(arr[i][1], temp.second));
                 ans[arr[i][2]] = temp.second;
             }
+            // If there is no empty room available
             else{
                 data.push(mp(arr[i][1], ++k));
                 ans[arr[i][2]] = k;
