@@ -1,3 +1,4 @@
+import os
 import json
 
 QUESTION_FILE = "questions.json"
@@ -11,12 +12,22 @@ def load_questions()->None:
 
 def update_questions(topic:str)->None:
     """Updates the README file for a topic"""
+    if not os.path.isdir(f"../{topic}"): return
+    with open(f"../{topic}/README.md", "w") as file:
+        file.write(f"# {topic}\n")
+        for question in QUESTIONS[topic]:
+            # print(f{"".join(question.split()).cpp})
+            if(os.path.isfile(f"../{topic}/{''.join(question.split())}.cpp")):
+                file.write(f" - [{question}]({''.join(question.split())}.cpp)\n")
+            else:
+                file.write(f" - {question}\n")
 
 def main()->None:
     """Main function"""
     load_questions()
-    for topic in QUESTIONS.keys():
-        update_questions(topic)
+    # for topic in QUESTIONS.keys():
+    #     update_questions(topic)
+    update_questions("Dynamic Programming")
 
 if __name__ == "__main__":
     main()
