@@ -25,9 +25,8 @@ def update_questions(topic:str)->None:
 def main()->None:
     """Main function"""
     load_questions()
-    # for topic in QUESTIONS.keys():
-    #     update_questions(topic)
-    update_questions("Dynamic Programming")
+    for topic in QUESTIONS.keys():
+        update_questions(topic)
 
 if __name__ == "__main__":
     main()
