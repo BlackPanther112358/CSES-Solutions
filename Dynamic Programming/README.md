@@ -1,6 +1,6 @@
 # Dynamic Programming
  - [Dice Combinations](DiceCombinations.cpp)
- - Minimizing Coins
+ - [Minimizing Coins](MinimizingCoins.cpp)
  - Coin Combinations I
  - Coin Combinations II
  - Removing Digits
