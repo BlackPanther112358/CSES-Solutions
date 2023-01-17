@@ -1,0 +1,20 @@
+# Range Queries
+ - [Static Range Sum Queries](StaticRangeSumQueries.cpp)
+ - [Static Range Minimum Queries](StaticRangeMinimumQueries.cpp)
+ - Dynamic Range Sum Queries
+ - Dynamic Range Minimum Queries
+ - [Range Xor Queries](RangeXorQueries.cpp)
+ - Range Update Queries
+ - [Forest Queries](ForestQueries.cpp)
+ - Hotel Queries
+ - List Removals
+ - Salary Queries
+ - Prefix Sum Queries
+ - Pizzeria Queries
+ - Subarray Sum Queries
+ - Distinct Values Queries
+ - Increasing Array Queries
+ - Forest Queries II
+ - Range Updates and Sums
+ - Polynomial Queries
+ - Range Queries and Copies
