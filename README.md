@@ -9,3 +9,10 @@ The solution file for each problem is named after the problem, and each solution
 ## Behind the scenes
 
 The ```scripts``` folder contains python program to update the README files for each topic folder. The program is run using GitHub Actions, and the README files are updated automatically whenever a new solution is added. Another json file is also updated to keep track of questions in the problemset.
+
+## Topics
+
+- [Sorting and Searching](/Sorting%20and%20Searching/)
+- [Dynamic Programming](/Dynamic%20Programming/)
+- [Graph Algorithms](/Graph%20Algorithms/)
+- [Range Queries](/Range%20Queries/)
