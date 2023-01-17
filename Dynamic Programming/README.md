@@ -1,5 +1,5 @@
 # Dynamic Programming
- - Dice Combinations
+ - [Dice Combinations](DiceCombinations.cpp)
  - Minimizing Coins
  - Coin Combinations I
  - Coin Combinations II
