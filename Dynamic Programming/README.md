@@ -1,9 +1,9 @@
 # Dynamic Programming
  - [Dice Combinations](DiceCombinations.cpp)
  - [Minimizing Coins](MinimizingCoins.cpp)
- - Coin Combinations I
- - Coin Combinations II
- - Removing Digits
+ - [Coin Combinations I](CoinCombinationsI.cpp)
+ - [Coin Combinations II](CoinCombinationsII.cpp)
+ - [Removing Digits](RemovingDigits.cpp)
  - Grid Paths
  - Book Shop
  - Array Description
