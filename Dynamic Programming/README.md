@@ -4,7 +4,7 @@
  - [Coin Combinations I](CoinCombinationsI.cpp)
  - [Coin Combinations II](CoinCombinationsII.cpp)
  - [Removing Digits](RemovingDigits.cpp)
- - Grid Paths
+ - [Grid Paths](GridPaths.cpp)
  - Book Shop
  - Array Description
  - Counting Towers
