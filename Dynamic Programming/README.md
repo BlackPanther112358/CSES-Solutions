@@ -5,8 +5,8 @@
  - [Coin Combinations II](CoinCombinationsII.cpp)
  - [Removing Digits](RemovingDigits.cpp)
  - [Grid Paths](GridPaths.cpp)
- - Book Shop
- - Array Description
+ - [Book Shop](BookShop.cpp)
+ - [Array Description](ArrayDescription.cpp)
  - Counting Towers
  - Edit Distance
  - Rectangle Cutting
