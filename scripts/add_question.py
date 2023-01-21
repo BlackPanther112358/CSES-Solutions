@@ -60,6 +60,7 @@ def add_directory(topic:str)->None:
 
 def copy_file(topic:str, question:str)->None:
     """Copies the solution file to the topic folder"""
+    if os.path.isfile(f"../{topic}/{''.join(question.split())}.cpp"): return
     shutil.copyfile(SOLUTION_FILE, f"../{topic}/{''.join(question.split())}.cpp")
 
 def update_README(topic:str)->None:
