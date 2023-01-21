@@ -14,6 +14,10 @@ def get_current_time()->str:
     """Returns the current time in IST"""
     return datetime.now(pytz.timezone('Asia/Kolkata')).strftime("%a %b %d %H:%M:%S %Y")
 
+def get_topic_dir(topic:str)->str:
+    """Returns the topic directory"""
+    return topic.replace(" ", "%20")
+
 def load_questions()->None:
     """Loads the questions from the question file"""
     global QUESTIONS
@@ -38,6 +42,21 @@ def get_topic(question:str)->str:
         if question in QUESTIONS[topic]:
             return topic
     return "UNDEFINED"
+
+def add_directory(topic:str)->None:
+    """Creates a directory for the topic"""
+    os.mkdir(f"../{topic}")
+    with open(f"/home/aakarsh/Projects/CSES-Solutions/README.md", "r") as file:
+        data = file.readlines()
+    for i in range(len(data)):
+        if data[i].strip() == "## Topics":
+            data = data[:i+2]
+            break 
+    for topic in QUESTIONS:
+        if os.path.isdir(f"../{topic}") : data.append(f"- [{topic}](/{get_topic_dir(topic)}/)\n")
+    with open(f"/home/aakarsh/Projects/CSES-Solutions/README.md", "w") as file:
+        file.writelines(data)
+    return
 
 def copy_file(topic:str, question:str)->None:
     """Copies the solution file to the topic folder"""
@@ -76,7 +95,7 @@ def main()->None:
 
     if not os.path.isdir(f"../{topic}"):
         logger.info(f"Creating directory ../{topic}")
-        os.mkdir(f"../{topic}")
+        add_directory(topic)
 
     copy_file(topic, question_name)
 
