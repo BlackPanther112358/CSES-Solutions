@@ -5,7 +5,7 @@ import pytz
 from datetime import datetime
 import logging
 
-LOG_FILE = "add_quesion.log"
+LOG_FILE = "../logs/add_quesion.log"
 QUESTION_FILE = "questions.json"
 QUESTIONS:dict[str:list[str]]
 SOLUTION_FILE = "solution.cpp"
