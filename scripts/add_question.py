@@ -46,7 +46,7 @@ def get_topic(question:str)->str:
 def add_directory(topic:str)->None:
     """Creates a directory for the topic"""
     os.mkdir(f"../{topic}")
-    with open(f"/home/aakarsh/Projects/CSES-Solutions/README.md", "r") as file:
+    with open(f"../README.md", "r") as file:
         data = file.readlines()
     for i in range(len(data)):
         if data[i].strip() == "## Topics":
@@ -54,7 +54,7 @@ def add_directory(topic:str)->None:
             break 
     for topic in QUESTIONS:
         if os.path.isdir(f"../{topic}") : data.append(f"- [{topic}](/{get_topic_dir(topic)}/)\n")
-    with open(f"/home/aakarsh/Projects/CSES-Solutions/README.md", "w") as file:
+    with open(f"../README.md", "w") as file:
         file.writelines(data)
     return
 
