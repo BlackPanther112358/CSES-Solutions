@@ -13,7 +13,7 @@
  - Money Sums
  - [Removal Game](RemovalGame.cpp)
  - Two Sets II
- - Increasing Subsequence
+ - [Increasing Subsequence](IncreasingSubsequence.cpp)
  - Projects
  - [Elevator Rides](ElevatorRides.cpp)
  - [Counting Tilings](CountingTilings.cpp)
