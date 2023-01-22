@@ -1,3 +1,4 @@
+// Tree Matching
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -26,18 +27,22 @@ const int neg_inf = LLONG_MIN;
 #define ctz(x)              __builtin_ctzll(x)  
 #define prec(x)             setprecision(x) << fixed
 
-vector<int> ans;
+int ans = 0;
+vector<bool> vis;
 vector<vector<int>> adj;
 
-int dfs(int u){
-	if(adj[u].size() == 0) return 0;
-	int cnt = 0;
-	for(auto v: adj[u]){
-		// Find the number of subordinates of v and add it to cnt
-		cnt += dfs(v) + 1;
+// Return true if the u node is not yet matched
+bool dfs(int u){
+	vis[u] = true;
+	bool matched = false;
+	for(auto v:adj[u]){
+		if(vis[v]) continue;
+		if(dfs(v) && (!matched)){
+			matched = true;
+			ans++;
+		}
 	}
-	ans[u] = cnt;
-	return cnt;
+	return !matched;
 }
 
 int32_t main(){
@@ -55,23 +60,24 @@ int32_t main(){
     // Taking input from console
 	int n;
 	cin >> n;
-	vector<int> parent(n, 0);
-	rep_u(i, 1, n) {cin >> parent[i]; parent[i]--;}
-
-	// Creating adjacency list
 	adj.resize(n);
-	rep_u(i, 1, n) adj[parent[i]].pb(i);
-
-	// We will use dfs to find the number of subordinates of each employee
-	ans.resize(n, 0);
-	// We will start dfs from the general manager of the company
+	vis.resize(n, false);
+	rep(n - 1){
+		int u, v;
+		cin >> u >> v;
+		u--, v--;
+		adj[u].pb(v);
+		adj[v].pb(u);
+	}
+	
+	// Calling dfs
 	dfs(0);
 
 	// Printing the answer
-	rep_u(i, 0, n) cout << ans[i] << " ";
+	cout << ans << nline;
 
 	// TIME COMPLEXITY: O(n)
-	// SPACE COMPLEXITY: O(n)
+	// SPACE COMPLEXITY: O(1)
 
     return 0;
 
