@@ -6,9 +6,9 @@ These are solutions for [CSES Problemset](https://cses.fi/problemset) written by
 
 Select the required topic from the list below to view the solutions for that topic. If the topic you are looking for is not listed below, it means that I have not yet added solutions for that topic.
 
-Upon clicking on the link, you will be redirected to the folder for that topic. The folder also contains a README file which contains the list of problems in that topic, along with their links to the solution (if added).
+Upon clicking on the link, you will be redirected to the folder for that topic. The folder also contains a ```README.md``` file which contains the list of problems in that topic, along with their links to the solution (if added).
 
-Again, to view the solution for a particular problem, click on the link in the README file. You will be redirected to the solution file for that problem.
+Again, to view the solution for a particular problem, click on the link in the ```README.md``` file. You will be redirected to the solution file for that problem.
 
 The solution file for each problem is named after the problem, and each solution file is well documented and commented.
 
