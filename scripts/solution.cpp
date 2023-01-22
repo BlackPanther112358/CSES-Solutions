@@ -1,3 +1,4 @@
+// Subordinates
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -26,6 +27,20 @@ const int neg_inf = LLONG_MIN;
 #define ctz(x)              __builtin_ctzll(x)  
 #define prec(x)             setprecision(x) << fixed
 
+vector<int> ans;
+vector<vector<int>> adj;
+
+int dfs(int u){
+	if(adj[u].size() == 0) return 0;
+	int cnt = 0;
+	for(auto v: adj[u]){
+		// Find the number of subordinates of v and add it to cnt
+		cnt += dfs(v) + 1;
+	}
+	ans[u] = cnt;
+	return cnt;
+}
+
 int32_t main(){
 
     ios_base::sync_with_stdio(false);
@@ -39,47 +54,25 @@ int32_t main(){
     #endif
 
     // Taking input from console
-	int n , m;
-	cin >> n >> m;
-	vector<int> v(n);
-	rep_u(i, 0, n) cin >> v[i];
+	int n;
+	cin >> n;
+	vector<int> parent(n, 0);
+	rep_u(i, 1, n) {cin >> parent[i]; parent[i]--;}
 
-	// dp[i][x] = number of ways to get value of x at index i
-	// We will optimize space complexity by storing only value of x at last row.
-	vector<int> dp(m, 0);
-	// Base case: if first value is 0, then we can get any value from 1 to m, else we can get only value v[0]
-	if(v[0] == 0) rep_u(i, 0, m) dp[i] = 1;
-	else dp[v[0] - 1] = 1;
+	// Creating adjacency list
+	adj.resize(n);
+	rep_u(i, 1, n) adj[parent[i]].pb(i);
 
-	// Iterating over all indices of array
-	rep_u(i, 1, n){
-		// Store the previous row and initialize current row to 0
-		vector<int> temp = dp;
-		dp.assign(m, 0);
-		// If value at current index is 0, then we can get any value from 1 to m
-		if(v[i] == 0){
-			rep_u(j, 0, m){
-				dp[j] += temp[j];
-				if(j > 0) dp[j] += temp[j - 1];
-				if(j < m - 1) dp[j] += temp[j + 1];
-				dp[j] %= mod;
-			}
-		// Else we can get only value v[i]
-		}else{
-			dp[v[i] - 1] += temp[v[i] - 1];
-			if(v[i] > 1) dp[v[i] - 1] += temp[v[i] - 2];
-			if(v[i] < m) dp[v[i] - 1] += temp[v[i]];
-			dp[v[i] - 1] %= mod;
-		}
-	}
+	// We will use dfs to find the number of subordinates of each employee
+	ans.resize(n, 0);
+	// We will start dfs from the general manager of the company
+	dfs(0);
 
-	// Answer is sum of all values in last row
-	int ans = 0;
-	rep_u(i, 0, m) ans = (ans + dp[i]) % mod;
-	cout << ans << nline;
+	// Printing the answer
+	rep_u(i, 0, n) cout << ans[i] << " ";
 
-	// TIME COMPLEXITY: O(n * m)
-	// SPACE COMPLEXITY: O(m)
+	// TIME COMPLEXITY: O(n)
+	// SPACE COMPLEXITY: O(n)
 
     return 0;
 
