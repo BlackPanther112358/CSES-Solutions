@@ -11,7 +11,7 @@
  - Edit Distance
  - Rectangle Cutting
  - Money Sums
- - Removal Game
+ - [Removal Game](RemovalGame.cpp)
  - Two Sets II
  - Increasing Subsequence
  - Projects
