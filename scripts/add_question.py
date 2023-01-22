@@ -5,11 +5,10 @@ import pytz
 from datetime import datetime
 import logging
 
-env_file = os.getenv("GITHUB_ENV")
-LOG_FILE = "../logs/add_quesion.log"
-QUESTION_FILE = "questions.json"
+LOG_FILE:str = "../logs/add_quesion.log"
+QUESTION_FILE:str = "questions.json"
 QUESTIONS:dict[str:list[str]]
-SOLUTION_FILE = "solution.cpp"
+SOLUTION_FILE:str = "solution.cpp"
 
 def get_current_time()->str:
     """Returns the current time in IST"""
@@ -79,22 +78,23 @@ def main()->None:
     """Main function"""
 
     logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    logger:logging.Logger = logging.getLogger(__name__)
 
     logger.info(f"Starting add_question.py at {get_current_time()}")
 
     load_questions()
-    question_name = parse_file()
+    question_name:str = parse_file()
     if question_name == "PARSE_ERROR":
         logger.info("Question name not found in solution.cpp")
         return
-    topic = get_topic(question_name)
 
+    topic:str = get_topic(question_name)
     if topic == "UNDEFINED":
         logger.info("Error: question not found in questions.json")
         return
     logger.info(f"Question: {question_name} Topic: {topic} found")
 
+    # Create the directory for topic if it doesn't exist
     if not os.path.isdir(f"../{topic}"):
         logger.info(f"Creating directory ../{topic}")
         add_directory(topic)
@@ -104,6 +104,8 @@ def main()->None:
     logger.info(f"Updating README.md for {topic}")
     update_README(topic)
 
+    # Update the commit message with the question name
+    env_file = os.getenv("GITHUB_ENV")
     with open(env_file, "w") as file:
         file.write(f"COMMIT_MSG=Added solution for {question_name} in {topic}")
 
