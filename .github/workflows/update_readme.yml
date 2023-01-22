@@ -21,7 +21,7 @@ jobs:
           pip install -r scripts/requirements.txt
       - name: Set commit message in env
         run: |
-          echo "COMMIT_MESSAGE=Updated Logs" >> $GITHUB_ENV
+          echo "COMMIT_MSG=Updated Logs" >> $GITHUB_ENV
       - name: execute python script
         working-directory: scripts
         run: |
