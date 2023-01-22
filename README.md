@@ -22,3 +22,4 @@ The ```scripts``` folder contains python program to add the latest solution to a
 - [Dynamic Programming](/Dynamic%20Programming/)
 - [Graph Algorithms](/Graph%20Algorithms/)
 - [Range Queries](/Range%20Queries/)
+- [Tree Algorithms](/Tree%20Algorithms/)
