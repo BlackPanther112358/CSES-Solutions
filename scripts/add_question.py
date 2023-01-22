@@ -5,6 +5,7 @@ import pytz
 from datetime import datetime
 import logging
 
+env_file = os.getenv("GITHUB_ENV")
 LOG_FILE = "../logs/add_quesion.log"
 QUESTION_FILE = "questions.json"
 QUESTIONS:dict[str:list[str]]
@@ -102,6 +103,9 @@ def main()->None:
 
     logger.info(f"Updating README.md for {topic}")
     update_README(topic)
+
+    with open(env_file, "w") as file:
+        file.write(f"COMMIT_MSG=Added solution for {question_name} in {topic}")
 
     logger.info(f"Program finished at {get_current_time()}")
 
