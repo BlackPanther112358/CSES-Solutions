@@ -1,3 +1,4 @@
+// Exponentiation
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -39,33 +40,21 @@ int32_t main(){
     #endif
 
     // Taking input from console
-	int n, x;
-	cin >> n >> x;
-    vector<int> a(n);
-    rep_u(i, 0, n) cin >> a[i];
-
-    // Sorting the array
-    sort(all(a));
-
-    // Using 2 pointers from both ends to find valid pairs of children such that 
-    // their weights are less than or equal to x
-    int i = 0, j = n - 1, ans = 0;
-    while(i <= j){
-        // If the sum of weights of the children is less than or equal to x,
-        if(a[i] + a[j] <= x){
-            i++;
-            j--;
+	int t;
+    cin >> t;
+    while (t--){
+        int a, b, ans = 1;
+        cin >> a >> b;
+        while(b){
+            if(b & 1) ans = (ans * a) % mod;
+            a = (a * a) % mod;
+            b >>= 1;
         }
-        // Else, we can only take the heavier child
-        else j--;
-        ans++;
+        cout << ans << nline;
     }
-
-    // Printing the answer
-    cout << ans << nline;
 	
-	// TIME COMPLEXITY: O(n*log(n))
-	// SPACE COMPLEXITY: O(n)
+	// TIME COMPLEXITY per testcase: O(log(b))
+	// SPACE COMPLEXITY per testcase: O(1)
 
     return 0;
 
