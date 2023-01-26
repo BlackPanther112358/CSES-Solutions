@@ -1,3 +1,4 @@
+// Apartments
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -39,18 +40,32 @@ int32_t main(){
     #endif
 
     // Taking input from console
-	int n;
-	cin >> n;
-    // Using set to store unique elements
-    set<int> data;
-	rep(n){
-        int x;
-        cin >> x;
-        data.insert(x);
+	int n, m, k;
+	cin >> n >> m >> k;
+    vector<int> a(n), b(m);
+    rep_u(i, 0, n) cin >> a[i];
+    rep_u(i, 0, m) cin >> b[i];
+
+    // Sorting the arrays
+    sort(all(a));
+    sort(all(b));
+
+    // We will use a pointer on a and b each, so that we can find the minimum apartment size
+    // for each applicant. 
+    // Number of apartments thus allocated will be the answer.
+    int ans = 0;
+    for(int i = 0, j = 0; (i < n) && (j < m); ){
+        if((a[i] + k) < b[j]) i++;
+        else if((b[j] + k) < a[i]) j++;
+        else{
+            ans++;
+            i++;
+            j++;
+        }
     }
 
-    // Output the size of set
-    cout << sz(data) << nline;
+    // Printing the answer
+    cout << ans << nline;
 	
 	// TIME COMPLEXITY: O(n*log(n))
 	// SPACE COMPLEXITY: O(n)
