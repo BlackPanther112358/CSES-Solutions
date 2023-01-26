@@ -1,5 +1,5 @@
 # Sorting and Searching
- - Distinct Numbers
+ - [Distinct Numbers](DistinctNumbers.cpp)
  - Apartments
  - Ferris Wheel
  - Concert Tickets
