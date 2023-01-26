@@ -1,6 +1,6 @@
 # Sorting and Searching
  - [Distinct Numbers](DistinctNumbers.cpp)
- - Apartments
+ - [Apartments](Apartments.cpp)
  - Ferris Wheel
  - Concert Tickets
  - Restaurant Customers
