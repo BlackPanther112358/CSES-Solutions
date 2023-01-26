@@ -1,3 +1,4 @@
+// Distinct Numbers
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -41,31 +42,17 @@ int32_t main(){
     // Taking input from console
 	int n;
 	cin >> n;
-	vector<int> a(n);
-	rep_u(i, 0, n) cin >> a[i];
+    // Using set to store unique elements
+    set<int> data;
+	rep(n){
+        int x;
+        cin >> x;
+        data.insert(x);
+    }
 
-	// dp[i] stores the smallest value of the last element of an increasing subsequence of length i+1
-	// Also, as a smaller length subsequence will always be a subsequence of a larger length subsequence, the value of dp[i] will always be smaller than dp[i+1]
-	// Thus dp[i] is always increasing. This allows us to use binary search the maximum length of an increasing subsequence ending at a[i]
-	vector<int> dp(n + 1, inf);
-	rep_u(i, 0, n){
-		// We need to find the smallest j, such that dp[j] >= a[i]
-		// Thus, dp[j] (last element of an increasing subsequence of length j+1) is a[i]
-		// This can be done using binary search
-		int idx = lower_bound(all(dp), a[i]) - dp.begin();
-		dp[idx] = a[i];
-	}
-
-	// Find the maximum length of an increasing subsequence
-	// We also added an extra element to dp in case the entire array is an increasing subsequence
-	rep_u(i, 0, n + 1){
-		// If dp[i] is inf, then no increasing subsequence of length i+1 exists
-		if(dp[i] == inf){
-			cout << i << nline;
-			break;
-		}
-	}
-
+    // Output the size of set
+    cout << sz(data) << nline;
+	
 	// TIME COMPLEXITY: O(n*log(n))
 	// SPACE COMPLEXITY: O(n)
 
