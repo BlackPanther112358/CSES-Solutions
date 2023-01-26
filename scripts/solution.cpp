@@ -1,3 +1,4 @@
+// Exponentiation
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -44,11 +45,16 @@ int32_t main(){
     while (t--){
         int a, b, ans = 1;
         cin >> a >> b;
+        // Using binary exponentiation
         while(b){
+            // If b is odd, multiply ans with a
             if(b & 1) ans = (ans * a) % mod;
+            // Multiply a with itself
             a = (a * a) % mod;
+            // Divide b by 2
             b >>= 1;
         }
+        // Print the answer
         cout << ans << nline;
     }
 	
