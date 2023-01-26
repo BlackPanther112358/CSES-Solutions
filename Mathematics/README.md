@@ -1,0 +1,32 @@
+# Mathematics
+ - Josephus Queries
+ - [Exponentiation](Exponentiation.cpp)
+ - Exponentiation II
+ - Counting Divisors
+ - Common Divisors
+ - Sum of Divisors
+ - Divisor Analysis
+ - Prime Multiples
+ - Counting Coprime Pairs
+ - Binomial Coefficients
+ - Creating Strings II
+ - Distributing Apples
+ - Christmas Party
+ - Bracket Sequences I
+ - Bracket Sequences II
+ - Counting Necklaces
+ - Counting Grids
+ - Fibonacci Numbers
+ - Throwing Dice
+ - Graph Paths I
+ - Graph Paths II
+ - Dice Probability
+ - Moving Robots
+ - Candy Lottery
+ - Inversion Probability
+ - Stick Game
+ - Nim Game I
+ - Nim Game II
+ - Stair Game
+ - Grundy's Game
+ - Another Game

@@ -40,3 +40,8 @@ INFO:__main__:Starting add_question.py at Thu Jan 26 17:26:51 2023
 INFO:__main__:Question: Ferris Wheel Topic: Sorting and Searching found
 INFO:__main__:Updating README.md for Sorting and Searching
 INFO:__main__:Program finished at Thu Jan 26 17:26:51 2023
+INFO:__main__:Starting add_question.py at Fri Jan 27 00:34:36 2023
+INFO:__main__:Question: Exponentiation Topic: Mathematics found
+INFO:__main__:Creating directory ../Mathematics
+INFO:__main__:Updating README.md for Mathematics
+INFO:__main__:Program finished at Fri Jan 27 00:34:36 2023
