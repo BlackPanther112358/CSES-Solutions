@@ -1,3 +1,4 @@
+// Ferris Wheel
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -39,28 +40,26 @@ int32_t main(){
     #endif
 
     // Taking input from console
-	int n, m, k;
-	cin >> n >> m >> k;
-    vector<int> a(n), b(m);
+	int n, x;
+	cin >> n >> x;
+    vector<int> a(n);
     rep_u(i, 0, n) cin >> a[i];
-    rep_u(i, 0, m) cin >> b[i];
 
-    // Sorting the arrays
+    // Sorting the array
     sort(all(a));
-    sort(all(b));
 
-    // We will use a pointer on a and b each, so that we can find the minimum apartment size
-    // for each applicant. 
-    // Number of apartments thus allocated will be the answer.
-    int ans = 0;
-    for(int i = 0, j = 0; (i < n) && (j < m); ){
-        if((a[i] + k) < b[j]) i++;
-        else if((b[j] + k) < a[i]) j++;
-        else{
-            ans++;
+    // Using 2 pointers from both ends to find valid pairs of children such that 
+    // their weights are less than or equal to x
+    int i = 0, j = n - 1, ans = 0;
+    while(i <= j){
+        // If the sum of weights of the children is less than or equal to x,
+        if(a[i] + a[j] <= x){
             i++;
-            j++;
+            j--;
         }
+        // Else, we can only take the heavier child
+        else j--;
+        ans++;
     }
 
     // Printing the answer
