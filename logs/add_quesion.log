@@ -45,3 +45,7 @@ INFO:__main__:Question: Exponentiation Topic: Mathematics found
 INFO:__main__:Creating directory ../Mathematics
 INFO:__main__:Updating README.md for Mathematics
 INFO:__main__:Program finished at Fri Jan 27 00:34:36 2023
+INFO:__main__:Starting add_question.py at Fri Jan 27 00:36:23 2023
+INFO:__main__:Question: Exponentiation Topic: Mathematics found
+INFO:__main__:Updating README.md for Mathematics
+INFO:__main__:Program finished at Fri Jan 27 00:36:23 2023
