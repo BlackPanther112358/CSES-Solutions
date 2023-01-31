@@ -1,3 +1,4 @@
+// Company Queries I
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -26,6 +27,40 @@ const int neg_inf = LLONG_MIN;
 #define ctz(x)              __builtin_ctzll(x)  
 #define prec(x)             setprecision(x) << fixed
 
+int l, timer = 0;
+// Store the time of entry and exit of each node to calculate the LCA
+vector<int> tin, tout;
+// Adjacency list for the tree
+vector<vector<int>> adj;
+// Store the 2^i th parent of each node for binary lifting
+vector<vector<int>> up;
+
+// Function to calculate the 2^i th parent of each node
+void calc_up(int v, int p){
+    tin[v] = ++timer;
+    up[v][0] = p;
+    rep_u(i, 1, l + 1){
+        // The 2^i th parent of a node is the 2^(i-1) th parent of the 2^(i-1) th parent of the node
+        up[v][i] = up[up[v][i - 1]][i - 1];
+    }
+    for(int u: adj[v]){
+        if(u != p){
+            calc_up(u, v);
+        }
+    }
+    tout[v] = ++timer;
+}
+
+// Function to calculate the k th parent of a node
+int solve(int v, int k){
+    // If k is 0, then the k th parent of the node is the node itself
+    if(k == 0) return v;
+    // Find the maximum i such that 2^i <= k
+    int i = 63 - clz(k);
+    // The k th parent of the node is the k - 2^i th parent of the 2^i th parent of the node
+    return solve(up[v][i], k - (1LL << i));
+}
+
 int32_t main(){
 
     ios_base::sync_with_stdio(false);
@@ -39,26 +74,34 @@ int32_t main(){
     #endif
 
     // Taking input from console
-	int t;
-    cin >> t;
-    while (t--){
-        int a, b, ans = 1;
-        cin >> a >> b;
-        // Using binary exponentiation
-        while(b){
-            // If b is odd, multiply ans with a
-            if(b & 1) ans = (ans * a) % mod;
-            // Multiply a with itself
-            a = (a * a) % mod;
-            // Divide b by 2
-            b >>= 1;
-        }
-        // Print the answer
-        cout << ans << nline;
+	int n, q;
+    cin >> n >> q;
+    // Store the maximum length we can jump while binary lifting
+    l = ceil(log2(n));
+    tin.resize(n + 1);
+    tout.resize(n + 1);
+    adj.resize(n + 1);
+    up.resize(n + 1, vector<int>(l+1));
+
+    rep_u(i, 2, n + 1){
+        int x;
+        cin >> x;
+        adj[x].pb(i);
     }
-	
-	// TIME COMPLEXITY per testcase: O(log(b))
-	// SPACE COMPLEXITY per testcase: O(1)
+
+    // We use 0 as an extra node to represent the supposed parent of the root node
+    calc_up(1, 0);
+
+    rep(q){
+        int x, k;
+        cin >> x >> k;
+        int res = solve(x, k);
+        // If the k th parent of the node is not the 0 node, then print -1
+        cout << (res ? res : -1) << nline;
+    }
+    
+	// TIME COMPLEXITY: O(n*log(n) + q*log(n))
+	// SPACE COMPLEXITY: O(n*log(n))
 
     return 0;
 
