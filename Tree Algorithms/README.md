@@ -5,7 +5,7 @@
  - Tree Distances I
  - Tree Distances II
  - [Company Queries I](CompanyQueriesI.cpp)
- - Company Queries II
+ - [Company Queries II](CompanyQueriesII.cpp)
  - Distance Queries
  - Counting Paths
  - Subtree Queries
