@@ -1,3 +1,4 @@
+// Company Queries II
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -50,14 +51,21 @@ void calc_up(int v, int p){
     tout[v] = ++timer;
 }
 
-// Function to calculate the k th parent of a node
-int solve(int v, int k){
-    // If k is 0, then the k th parent of the node is the node itself
-    if(k == 0) return v;
-    // Find the maximum i such that 2^i <= k
-    int i = 63 - clz(k);
-    // The k th parent of the node is the k - 2^i th parent of the 2^i th parent of the node
-    return solve(up[v][i], k - (1LL << i));
+// Function to check if a node is an ancestor of another node
+bool is_ancestor(int u, int v){
+    // If the dfs enters u before v and exits u after v, then u is an ancestor of v
+    return (tin[u] <= tin[v]) && (tout[u] >= tout[v]);
+}
+
+// Function to find the LCA of two nodes
+int lca(int u, int v){
+    // Check if either of the nodes is the other node's ancestor
+    if(is_ancestor(u, v)) return u;
+    if(is_ancestor(v, u)) return v;
+    // We find the highest parent of u which is not an ancestor of the other node
+    rep_d(i, l, 0) if(!is_ancestor(up[u][i], v)) u = up[u][i];
+    // The parent of highest parent of u which is not an ancestor of the other node is the LCA
+    return up[u][0];
 }
 
 int32_t main(){
@@ -79,6 +87,8 @@ int32_t main(){
     l = ceil(log2(n));
     tin.resize(n + 1);
     tout.resize(n + 1);
+    // Set exit time of 0 to inf as it is never visited
+    tout[0] = inf;
     adj.resize(n + 1);
     up.resize(n + 1, vector<int>(l+1));
 
@@ -92,11 +102,9 @@ int32_t main(){
     calc_up(1, 0);
 
     rep(q){
-        int x, k;
-        cin >> x >> k;
-        int res = solve(x, k);
-        // If the k th parent of the node is not the 0 node, then print -1
-        cout << (res ? res : -1) << nline;
+        int a, b;
+        cin >> a >> b;
+        cout << lca(a, b) << nline;
     }
     
 	// TIME COMPLEXITY: O(n*log(n) + q*log(n))
