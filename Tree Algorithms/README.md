@@ -4,7 +4,7 @@
  - Tree Diameter
  - Tree Distances I
  - Tree Distances II
- - Company Queries I
+ - [Company Queries I](CompanyQueriesI.cpp)
  - Company Queries II
  - Distance Queries
  - Counting Paths
