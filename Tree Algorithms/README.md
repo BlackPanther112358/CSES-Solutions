@@ -1,7 +1,7 @@
 # Tree Algorithms
  - [Subordinates](Subordinates.cpp)
  - [Tree Matching](TreeMatching.cpp)
- - Tree Diameter
+ - [Tree Diameter](TreeDiameter.cpp)
  - Tree Distances I
  - Tree Distances II
  - [Company Queries I](CompanyQueriesI.cpp)
