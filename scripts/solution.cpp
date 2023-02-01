@@ -1,3 +1,4 @@
+// Tree Diameter
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -26,45 +27,31 @@ const int neg_inf = LLONG_MIN;
 #define ctz(x)              __builtin_ctzll(x)  
 #define prec(x)             setprecision(x) << fixed
 
-int l, timer = 0;
-// Store the time of entry and exit of each node to calculate the LCA
-vector<int> tin, tout;
-// Adjacency list for the tree
+// Store the final answer as global variable
+int ans = 0;
 vector<vector<int>> adj;
-// Store the 2^i th parent of each node for binary lifting
-vector<vector<int>> up;
 
-// Function to calculate the 2^i th parent of each node
-void calc_up(int v, int p){
-    tin[v] = ++timer;
-    up[v][0] = p;
-    rep_u(i, 1, l + 1){
-        // The 2^i th parent of a node is the 2^(i-1) th parent of the 2^(i-1) th parent of the node
-        up[v][i] = up[up[v][i - 1]][i - 1];
-    }
-    for(int u: adj[v]){
-        if(u != p){
-            calc_up(u, v);
+// We assume that u is the highest node in the diameter of the tree
+// The diameter will be sum of the depths of the two farthest nodes from u
+int dfs(int u, int p){
+    // mx1 and mx2 will store the depths of the two farthest nodes from u
+    int mx1 = 0, mx2 = 0;
+    for(auto v: adj[u]){
+        if(v != p){
+            int d = dfs(v, u);
+            if(d > mx1){
+                mx2 = mx1;
+                mx1 = d;
+            }
+            else if(d > mx2){
+                mx2 = d;
+            }
         }
     }
-    tout[v] = ++timer;
-}
-
-// Function to check if a node is an ancestor of another node
-bool is_ancestor(int u, int v){
-    // If the dfs enters u before v and exits u after v, then u is an ancestor of v
-    return (tin[u] <= tin[v]) && (tout[u] >= tout[v]);
-}
-
-// Function to find the LCA of two nodes
-int lca(int u, int v){
-    // Check if either of the nodes is the other node's ancestor
-    if(is_ancestor(u, v)) return u;
-    if(is_ancestor(v, u)) return v;
-    // We find the highest parent of u which is not an ancestor of the other node
-    rep_d(i, l, 0) if(!is_ancestor(up[u][i], v)) u = up[u][i];
-    // The parent of highest parent of u which is not an ancestor of the other node is the LCA
-    return up[u][0];
+    // Updating the diameter of the tree
+    ans = max(ans, mx1 + mx2);
+    // Returning the depth of the farthest node from u
+    return mx1 + 1;
 }
 
 int32_t main(){
@@ -80,34 +67,25 @@ int32_t main(){
     #endif
 
     // Taking input from console
-	int n, q;
-    cin >> n >> q;
-    // Store the maximum length we can jump while binary lifting
-    l = ceil(log2(n));
-    tin.resize(n + 1);
-    tout.resize(n + 1);
-    // Set exit time of 0 to inf as it is never visited
-    tout[0] = inf;
-    adj.resize(n + 1);
-    up.resize(n + 1, vector<int>(l+1));
-
+	int n;
+    cin >> n;
+    adj.resize(n);
     rep_u(i, 2, n + 1){
-        int x;
-        cin >> x;
-        adj[x].pb(i);
-    }
-
-    // We use 0 as an extra node to represent the supposed parent of the root node
-    calc_up(1, 0);
-
-    rep(q){
         int a, b;
         cin >> a >> b;
-        cout << lca(a, b) << nline;
+        adj[a - 1].pb(b - 1);
+        adj[b - 1].pb(a - 1);
     }
+
+    // We can arbitrarily choose any node as the root in a tree
+    // Thus setting node 1 as root, and parent -1
+    dfs(0, -1);
+
+    // Printing the diameter of the tree
+    cout << ans << nline;
     
-	// TIME COMPLEXITY: O(n*log(n) + q*log(n))
-	// SPACE COMPLEXITY: O(n*log(n))
+	// TIME COMPLEXITY: O(n)
+	// SPACE COMPLEXITY: O(n)
 
     return 0;
 
