@@ -1,3 +1,4 @@
+// Edit Distance
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -26,33 +27,6 @@ const int neg_inf = LLONG_MIN;
 #define ctz(x)              __builtin_ctzll(x)  
 #define prec(x)             setprecision(x) << fixed
 
-// Store the final answer as global variable
-int ans = 0;
-vector<vector<int>> adj;
-
-// We assume that u is the highest node in the diameter of the tree
-// The diameter will be sum of the depths of the two farthest nodes from u
-int dfs(int u, int p){
-    // mx1 and mx2 will store the depths of the two farthest nodes from u
-    int mx1 = 0, mx2 = 0;
-    for(auto v: adj[u]){
-        if(v != p){
-            int d = dfs(v, u);
-            if(d > mx1){
-                mx2 = mx1;
-                mx1 = d;
-            }
-            else if(d > mx2){
-                mx2 = d;
-            }
-        }
-    }
-    // Updating the diameter of the tree
-    ans = max(ans, mx1 + mx2);
-    // Returning the depth of the farthest node from u
-    return mx1 + 1;
-}
-
 int32_t main(){
 
     ios_base::sync_with_stdio(false);
@@ -66,25 +40,44 @@ int32_t main(){
     #endif
 
     // Taking input from console
-	int n;
-    cin >> n;
-    adj.resize(n);
-    rep_u(i, 2, n + 1){
-        int a, b;
-        cin >> a >> b;
-        adj[a - 1].pb(b - 1);
-        adj[b - 1].pb(a - 1);
+    string s, t;
+    cin >> s >> t;
+    int n = s.size(), m = t.size();
+    // Making sure that s is the longer string
+    if(n < m){
+        swap(s, t);
+        swap(n, m);
     }
 
-    // We can arbitrarily choose any node as the root in a tree
-    // Thus setting node 1 as root, and parent -1
-    dfs(0, -1);
+    // dp[i][j] stores the edit distance between s[0...i] and t[0...j]
+    vector<int> dp(m + 1, inf);
+    // Base case
+    // As s is currently empty, we need to delete all characters of t
+    rep_u(i, 0, m + 1) dp[i] = i;
 
-    // Printing the diameter of the tree
-    cout << ans << nline;
+    rep_u(i, 1, n + 1){
+        // Assign the previous row to temp
+        vector<int> temp = dp;
+        dp.assign(m + 1, inf);
+        // For empty string t, we need to insert all characters of s
+        dp[0] = i;
+        rep_u(j, 1, m + 1){
+            // We delete the current character of s
+            dp[j] = min(dp[j], temp[j] + 1);
+            // We insert the current character of t
+            dp[j] = min(dp[j], dp[j - 1] + 1);
+            // If current characters of s and t are same, we don't need to do anything
+            if(s[i - 1] == t[j - 1]) dp[j] = min(dp[j], temp[j - 1]);
+            // Else we replace the current character of s with the current character of t
+            else dp[j] = min(dp[j], temp[j - 1] + 1);
+        }
+    }
+
+    // Printing the answer
+    cout << dp[m] << nline;
     
-	// TIME COMPLEXITY: O(n)
-	// SPACE COMPLEXITY: O(n)
+	// TIME COMPLEXITY: O(n*m)
+	// SPACE COMPLEXITY: O(min(n, m))
 
     return 0;
 
