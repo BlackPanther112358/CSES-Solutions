@@ -8,7 +8,7 @@
  - [Book Shop](BookShop.cpp)
  - [Array Description](ArrayDescription.cpp)
  - Counting Towers
- - Edit Distance
+ - [Edit Distance](EditDistance.cpp)
  - Rectangle Cutting
  - Money Sums
  - [Removal Game](RemovalGame.cpp)
