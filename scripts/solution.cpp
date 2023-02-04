@@ -1,3 +1,4 @@
+// Money Sums
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -39,44 +40,35 @@ int32_t main(){
     #endif
 
     // Taking input from console
-    string s, t;
-    cin >> s >> t;
-    int n = s.size(), m = t.size();
-    // Making sure that s is the longer string
-    if(n < m){
-        swap(s, t);
-        swap(n, m);
-    }
+    int n;
+    cin >> n;
+    vector<int> coins(n);
+    rep_u(i, 0, n) cin >> coins[i];
 
-    // dp[i][j] stores the edit distance between s[0...i] and t[0...j]
-    vector<int> dp(m + 1, inf);
-    // Base case
-    // As s is currently empty, we need to delete all characters of t
-    rep_u(i, 0, m + 1) dp[i] = i;
+    // dp[i] = 1 if we can make sum i using the coins else 0
+    vector<bool> dp(sum_all(coins) + 1, false);
+    // We can make sum 0 using no coins
+    dp[0] = true;
 
-    rep_u(i, 1, n + 1){
-        // Assign the previous row to temp
-        vector<int> temp = dp;
-        dp.assign(m + 1, inf);
-        // For empty string t, we need to insert all characters of s
-        dp[0] = i;
-        rep_u(j, 1, m + 1){
-            // We delete the current character of s
-            dp[j] = min(dp[j], temp[j] + 1);
-            // We insert the current character of t
-            dp[j] = min(dp[j], dp[j - 1] + 1);
-            // If current characters of s and t are same, we don't need to do anything
-            if(s[i - 1] == t[j - 1]) dp[j] = min(dp[j], temp[j - 1]);
-            // Else we replace the current character of s with the current character of t
-            else dp[j] = min(dp[j], temp[j - 1] + 1);
+    // We must use each coin atmost once, thus we iterate over the coins
+    rep_u(i, 0, n){
+        // We store the previous dp array before updating it
+        vector<bool> temp = dp;
+        // We update the dp array for all the sums that can be made using the current coin
+        rep_u(j, 1, sz(dp)){
+            // We can make sum j using the current coin if we can make sum j - coins[i] using the coins before the current coin
+            if(j >= coins[i]) dp[j] = temp[j] || temp[j - coins[i]];
         }
     }
 
-    // Printing the answer
-    cout << dp[m] << nline;
+    // Outputting the answer
+    vector<int> ans;
+    rep_u(i, 1, sz(dp)) if(dp[i]) ans.pb(i);
+    cout << sz(ans) << nline;
+    for(auto x: ans) cout << x << " ";
     
-	// TIME COMPLEXITY: O(n*m)
-	// SPACE COMPLEXITY: O(min(n, m))
+	// TIME COMPLEXITY: O(n*sum(coins)))
+	// SPACE COMPLEXITY: O(n)
 
     return 0;
 
