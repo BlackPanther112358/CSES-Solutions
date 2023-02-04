@@ -10,7 +10,7 @@
  - Counting Towers
  - [Edit Distance](EditDistance.cpp)
  - Rectangle Cutting
- - Money Sums
+ - [Money Sums](MoneySums.cpp)
  - [Removal Game](RemovalGame.cpp)
  - Two Sets II
  - [Increasing Subsequence](IncreasingSubsequence.cpp)
