@@ -13,7 +13,7 @@
  - Cycle Finding
  - Flight Routes
  - Round Trip II
- - Course Schedule
+ - [Course Schedule](CourseSchedule.cpp)
  - Longest Flight Route
  - Game Routes
  - Investigation

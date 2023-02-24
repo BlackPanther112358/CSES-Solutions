@@ -75,3 +75,7 @@ INFO:__main__:Starting add_question.py at Sun Feb 05 03:13:31 2023
 INFO:__main__:Question: Money Sums Topic: Dynamic Programming found
 INFO:__main__:Updating README.md for Dynamic Programming
 INFO:__main__:Program finished at Sun Feb 05 03:13:31 2023
+INFO:__main__:Starting add_question.py at Fri Feb 24 19:52:29 2023
+INFO:__main__:Question: Course Schedule Topic: Graph Algorithms found
+INFO:__main__:Updating README.md for Graph Algorithms
+INFO:__main__:Program finished at Fri Feb 24 19:52:29 2023
