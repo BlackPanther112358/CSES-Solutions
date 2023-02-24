@@ -17,7 +17,7 @@
  - Longest Flight Route
  - Game Routes
  - Investigation
- - Planets Queries I
+ - [Planets Queries I](PlanetsQueriesI.cpp)
  - Planets Queries II
  - Planets Cycles
  - Road Reparation
