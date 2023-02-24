@@ -1,3 +1,4 @@
+// Planets Queries I
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -9,45 +10,6 @@ using namespace __gnu_pbds;
 const int mod = 1000000007;
 const int inf = LLONG_MAX;
 const int neg_inf = LLONG_MIN;
-
-#define nline               "\n"
-#define rep(xx)             for(int aa = 0; aa < xx; aa++)
-#define rep_u(ii, aa, bb)   for(int ii = aa; ii < bb; ii++)
-#define rep_d(ii, aa, bb)   for(int ii = aa; ii >= bb; ii--)
-#define sz(x)               (int)x.size()
-#define pb                  push_back
-#define mp                  make_pair
-#define all(x)              (x).begin(), (x).end()
-#define sum_all(x)          accumulate(all(x), 0)
-#define max_idx(x)          max_element(all(x)) - x.begin()
-#define min_idx(x)          min_element(all(x)) - x.begin()
-#define pcnt(x)             __builtin_popcountll(x)
-#define clz(x)              __builtin_clzll(x)
-#define ctz(x)              __builtin_ctzll(x)  
-#define prec(x)             setprecision(x) << fixed
-
-int timer = 0;
-vector<bool> visited;
-vector<int> tin, tout;
-vector<int> order;
-vector<vector<int>> graph;
-
-bool dfs(int u){
-    // Mark the node as visited and assign it an entry time
-    tin[u] = timer++;
-    visited[u] = true;
-    for(auto v: graph[u]){
-        // If a node is visited but not exited yet, then there is a cycle in the graph
-        if(visited[v] && tout[v] == -1) return false;
-        if(!visited[v]){
-            if(!dfs(v)) return false;
-        }
-    }
-    tout[u] = timer++;
-    // Add nodes to the topological sort in reverse order of their exit time
-    order.pb(u);
-    return true;
-}
 
 int32_t main(){
 
@@ -62,37 +24,46 @@ int32_t main(){
     #endif
 
     // Taking input from console
-    int n, m;
-    cin >> n >> m;
-    graph.resize(n);
-    visited.resize(n, false);
-    tin.resize(n, -1);
-    tout.resize(n, -1);
-    // Create a graph, if course A must be taken before course B, then make an edge from A to B
-    rep(m){
-        int a, b;
-        cin >> a >> b;
-        a--; b--;
-        graph[a].pb(b);
+    int n, q;
+    cin >> n >> q;
+
+    // We will use binary jumping to solve this problem
+    // Initialize the jump array, where jump[i][j] = 2^jth parent of i
+    // Since we have to find 10^9 the parent in the worst case, we will need log2(10^9) = 30 jumps
+    int jump[n][30];
+
+    // Take input of the parent of each node
+    for(int i = 0; i < n; i++){
+        cin >> jump[i][0];
+        jump[i][0]--;
     }
 
-    // Thus, we can create a topological sort of the graph. 
-    // If there is a cycle in the graph, then the topological sort will not be possible.
-    rep_u(i, 0, n){
-        if(visited[i]) continue;
-        if(!dfs(i)){
-            cout << "IMPOSSIBLE" << nline;
-            return 0;
+    // Construct the jump array
+    // We iterate over the size of jump so that for larger values of j, we can use the values of smaller j
+    for(int j = 1; j < 30; j++){
+        for(int i = 0; i < n; i++){
+            // 2^jth parent of i is 2^(j-1)th parent of 2^(j-1)th parent of i
+            jump[i][j] = jump[jump[i][j-1]][j-1];
         }
     }
 
-    // Reverse the topological sort to get the correct order of courses
-    reverse(all(order));
-    for(auto x: order) cout << x+1 << " ";
-    cout << nline;
+    // Process the queries
+    while(q--){
+        int x, k;
+        cin >> x >> k;
+        x--;
+        // We iterate over the bits of k from the most significant bit to the least significant bit
+        for(int i = 29; i >= 0; i--){
+            // If the ith bit is set, we jump to the 2^ith parent of x
+            if(k & (1 << i)){
+                x = jump[x][i];
+            }
+        }
+        cout << x + 1 << '\n';
+    }
 
-	// TIME COMPLEXITY: O(n + m)
-	// SPACE COMPLEXITY: O(n + m)
+	// TIME COMPLEXITY: O(n*log(k) + q*log(k))
+	// SPACE COMPLEXITY: O(n*log(k))
 
     return 0;
 
