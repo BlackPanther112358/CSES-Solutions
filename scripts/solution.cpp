@@ -1,3 +1,4 @@
+// Course Schedule
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -26,6 +27,29 @@ const int neg_inf = LLONG_MIN;
 #define ctz(x)              __builtin_ctzll(x)  
 #define prec(x)             setprecision(x) << fixed
 
+int timer = 0;
+vector<bool> visited;
+vector<int> tin, tout;
+vector<int> order;
+vector<vector<int>> graph;
+
+bool dfs(int u){
+    // Mark the node as visited and assign it an entry time
+    tin[u] = timer++;
+    visited[u] = true;
+    for(auto v: graph[u]){
+        // If a node is visited but not exited yet, then there is a cycle in the graph
+        if(visited[v] && tout[v] == -1) return false;
+        if(!visited[v]){
+            if(!dfs(v)) return false;
+        }
+    }
+    tout[u] = timer++;
+    // Add nodes to the topological sort in reverse order of their exit time
+    order.pb(u);
+    return true;
+}
+
 int32_t main(){
 
     ios_base::sync_with_stdio(false);
@@ -39,35 +63,37 @@ int32_t main(){
     #endif
 
     // Taking input from console
-    int n;
-    cin >> n;
-    vector<int> coins(n);
-    rep_u(i, 0, n) cin >> coins[i];
+    int n, m;
+    cin >> n >> m;
+    graph.resize(n);
+    visited.resize(n, false);
+    tin.resize(n, -1);
+    tout.resize(n, -1);
+    // Create a graph, if course A must be taken before course B, then make an edge from A to B
+    rep(m){
+        int a, b;
+        cin >> a >> b;
+        a--; b--;
+        graph[a].pb(b);
+    }
 
-    // dp[i] = 1 if we can make sum i using the coins else 0
-    vector<bool> dp(sum_all(coins) + 1, false);
-    // We can make sum 0 using no coins
-    dp[0] = true;
-
-    // We must use each coin atmost once, thus we iterate over the coins
+    // Thus, we can create a topological sort of the graph. 
+    // If there is a cycle in the graph, then the topological sort will not be possible.
     rep_u(i, 0, n){
-        // We store the previous dp array before updating it
-        vector<bool> temp = dp;
-        // We update the dp array for all the sums that can be made using the current coin
-        rep_u(j, 1, sz(dp)){
-            // We can make sum j using the current coin if we can make sum j - coins[i] using the coins before the current coin
-            if(j >= coins[i]) dp[j] = temp[j] || temp[j - coins[i]];
+        if(visited[i]) continue;
+        if(!dfs(i)){
+            cout << "IMPOSSIBLE" << nline;
+            return 0;
         }
     }
 
-    // Outputting the answer
-    vector<int> ans;
-    rep_u(i, 1, sz(dp)) if(dp[i]) ans.pb(i);
-    cout << sz(ans) << nline;
-    for(auto x: ans) cout << x << " ";
-    
-	// TIME COMPLEXITY: O(n*sum(coins)))
-	// SPACE COMPLEXITY: O(n)
+    // Reverse the topological sort to get the correct order of courses
+    reverse(all(order));
+    for(auto x: order) cout << x+1 << " ";
+    cout << nline;
+
+	// TIME COMPLEXITY: O(n + m)
+	// SPACE COMPLEXITY: O(n + m)
 
     return 0;
 
