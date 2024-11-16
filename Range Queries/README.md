@@ -1,7 +1,7 @@
 # Range Queries
  - [Static Range Sum Queries](StaticRangeSumQueries.cpp)
  - [Static Range Minimum Queries](StaticRangeMinimumQueries.cpp)
- - Dynamic Range Sum Queries
+ - [Dynamic Range Sum Queries](DynamicRangeSumQueries.cpp)
  - Dynamic Range Minimum Queries
  - [Range Xor Queries](RangeXorQueries.cpp)
  - Range Update Queries
