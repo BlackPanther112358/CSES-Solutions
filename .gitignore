@@ -31,7 +31,9 @@
 *.out
 *.app
 
-# Ignore input and output files
-./scripts/input.txt
-./scripts/output.txt
-./scripts/error.txt
+.vscode/*
+
+scripts/input.txt
+scripts/output.txt
+scripts/error.txt
+scripts/solution
