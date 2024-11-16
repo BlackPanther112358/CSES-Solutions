@@ -34,3 +34,4 @@
 # Ignore input and output files
 ./scripts/input.txt
 ./scripts/output.txt
+./scripts/error.txt
