@@ -1,7 +1,7 @@
 # Mathematics
  - Josephus Queries
  - [Exponentiation](Exponentiation.cpp)
- - Exponentiation II
+ - [Exponentiation II](ExponentiationII.cpp)
  - [Counting Divisors](CountingDivisors.cpp)
  - Common Divisors
  - Sum of Divisors
