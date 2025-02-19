@@ -1,4 +1,4 @@
-// Counting Divisors
+// Exponentiation II
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -10,6 +10,16 @@ using namespace __gnu_pbds;
 const int mod = 1000000007;
 const int inf = LLONG_MAX;
 const int neg_inf = LLONG_MIN;
+
+int bin_exp(int x, int y, int m){
+    int res = 1;
+    while(y > 0){
+        if(y & 1) res = (res * x) % m;
+        y >>= 1;
+        x = (x * x) % m;
+    }
+    return res;
+}
 
 int32_t main(){
 
@@ -23,24 +33,16 @@ int32_t main(){
         freopen("error.txt", "w", stderr);
     #endif
 
-    int N = 1e6;
-    vector<int> div_cnt(N + 1, 0);
-    for(int i = 1; i <= N; i++){
-        for(int j = i; j <= N; j += i){
-            div_cnt[j]++;
-        }
-    }
-
     int n;
     cin >> n;
     while(n--){
-        int x;
-        cin >> x;
-        cout << div_cnt[x] << endl;
+        int a, b, c;
+        cin >> a >> b >> c;
+        cout << bin_exp(a, bin_exp(b, c, mod - 1), mod) << endl;
     }
 
-	// TIME COMPLEXITY: O(xlog(x) + n)
-	// SPACE COMPLEXITY: O(x)
+	// TIME COMPLEXITY: O(n*log(b)*log(c))
+	// SPACE COMPLEXITY: O(1)
 
     return 0;
 
